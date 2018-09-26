@@ -1,9 +1,7 @@
 {
   "manifest_version": 2,
   "name": "The Bill Wizard",
-  "permissions": [
-    "https://thebillwizard.com/"
-  ],
+  "permissions": [ "https://thebillwizard.com/", "storage" ],
   "version": "0.1",
   "background": {
     "scripts": ["background.js"]

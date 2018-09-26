@@ -7,6 +7,15 @@ var TRACKINGSTRING = "&utm_source=tbwextension&utm_campaign=chrome";
 $(document).ready(function () {
 
 
+    $("#load-more").click(function(){
+
+
+
+
+    });
+
+
+
 
 
     loadPosts();
@@ -58,13 +67,23 @@ function renderLoadedPosts(obj, template, dest) {
 
         dest.append($(temp));
 
-
+        ARTICLES.push(obj[i].id);
 
     }
 
 
     $("#spinner").hide();
     $("#load-more").fadeIn(200);
+
+
+    chrome.storage.sync.set({"viewedArticles": JSON.stringify(ARTICLES)}, function() {
+
+        });
+
+
+
+
+
 
 
 }
