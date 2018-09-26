@@ -1,0 +1,132 @@
+#logo {
+
+    display: block;
+    margin: auto;
+    width: 180px;
+    margin-bottom: 25px;
+}
+
+body {
+
+    margin: 0px;
+    padding-top: 15px;
+}
+
+
+#tbw-wrapper {
+
+
+    width:400px;
+    text-align: center;
+    margin: auto;
+    margin-top: 15px;
+
+}
+
+#spinner {
+
+    width: 50px;
+    margin: auto;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
+
+#load-more {
+
+    display: none;
+}
+#view-more {
+    width: 200px;
+    line-height: 40px;
+    margin: 10px auto 20px;
+    background: #01be97;
+    text-align: center;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    float: none;
+    clear: both;
+    font-family: 'Roboto', sans-serif;
+    display: block;
+    text-decoration: none;
+    margin-top: 25px;
+    display: block;
+}
+
+.thumbnail-info a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-between;
+    text-decoration: none;
+}
+
+.thumbnail-info {
+
+   margin-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-top: 5px;
+    padding-bottom: 7px;
+}
+
+.thumbnail-info a .thumbnail img {
+    width: 100%;
+    max-width: 135px;
+}
+
+.thumbnail-info a .info {
+    float: right;
+    clear: right;
+    max-width: 62.5%;
+    padding-left: 10px;
+}
+
+  .thumbnail-info .title {
+          font-size: 17px;
+    line-height: 21px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: #323937;
+    text-align: left;
+    padding-bottom: 7px;
+}
+
+.tile-meta {
+    font-family: Arial, sans-serif;
+    text-align: left;
+    font-size: 11px;
+    color: #939d9a;
+}
+
+.newArticle {
+
+    position: relative;
+    overflow: hidden;
+}
+
+.newArticle:after {
+
+   position: absolute;
+    height: 15px;
+    width: 63px;
+    background: #fb8127;
+    color: white;
+    content: "New";
+    text-transform: uppercase;
+    line-height: 15px;
+    text-align: center;
+    display: block;
+    top: 8px;
+    left: -17px;
+    transform: rotate(-45deg);
+    font-weight: bold;
+    font-size: 10px;
+
+}
