@@ -1,6 +1,6 @@
 var POSTURL = 'https://thebillwizard.com/wp-json/wp/v2/posts?post_type=post&_embed&status=publish&per_page=5&page=1';
 var ARTICLES = [];
-var DAYLIMIT = 2;
+var DAYLIMIT = 4;
 var NEWARTICLECLASS = "newArticle";
 var TRACKINGSTRING = "&utm_source=tbwextension&utm_campaign=chrome";
 
@@ -76,9 +76,8 @@ function renderLoadedPosts(obj, template, dest) {
     $("#load-more").fadeIn(200);
 
 
-    chrome.storage.sync.set({"viewedArticles": JSON.stringify(ARTICLES)}, function() {
+    chrome.runtime.sendMessage({"message": "viewed_articles", "articles": JSON.stringify(ARTICLES)});
 
-        });
 
 
 

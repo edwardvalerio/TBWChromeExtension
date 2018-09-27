@@ -1,6 +1,7 @@
 
 var POSTURL = 'https://thebillwizard.com/wp-json/wp/v2/posts?post_type=post&_embed&status=publish&per_page=5&page=1';
-var DAYLIMIT = 2;
+var DAYLIMIT = 4;
+var PENDING = 0;
 
 
 
@@ -18,29 +19,52 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 // This block is new!
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if( request.message === "open_new_tab" ) {
-      chrome.tabs.create({"url": request.url});
-    }
-
-    if(request.message === "returned_badge") {
 
 
-        getDisplayBadge();
+    switch(request.message) {
 
-       }
+        case "open_new_tab":
+               chrome.tabs.create({"url": request.url});
+
+             break;
+
+        case "returned_badge":
+               getDisplayBadge();
+             break;
+
+        case "viewed_articles":
+
+             saveViewedArticles(request.articles);
+             break;
 
 
+
+
+           }
 
   }
-
 
 );
 
 
+function saveViewedArticles(articles) {
+
+
+      chrome.storage.local.set({"viewedArticles": articles}, function() {
+
+
+
+        });
+
+
+
+
+}
+
 function getDisplayBadge() {
 
 
-    var PENDING = 0;
+    PENDING = 0;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", POSTURL, true);
     xhr.onreadystatechange = function() {
@@ -53,29 +77,41 @@ function getDisplayBadge() {
 
          var isNew = isNewArtic(resp[i].date);
 
+         hasBeenViewedBefore(resp[i].id, isNew).then(function(result){
 
-         hasBeenViewedBefore(resp[i].id).then(function(result){
 
-             if(isNew && !result) {
+
+             if(result.isnew){
+
+
+                 if(result.success != true) {
+
                  PENDING++;
+                 chrome.browserAction.setBadgeText({text: "" + PENDING });
 
-                 chrome.browserAction.setBadgeBackgroundColor({ color: [255, 104, 88, 255] });
-                chrome.browserAction.setBadgeText({text: "" + PENDING });
+               }
 
-            }
+
+             }
+
+
 
 
 
          });
 
 
-
-
-
-
       }
 
+        if(PENDING == 0) {
 
+             chrome.browserAction.setBadgeText({text: "" });
+
+        }
+
+
+
+         chrome.browserAction.setBadgeBackgroundColor({ color: [255, 104, 88, 255] });
 
 
        }
@@ -98,6 +134,7 @@ function isNewArtic(iso) {
     var daysDiff = end - start; // exact dates
 
 
+
     if(daysDiff <= DAYLIMIT) {
         return true;
     }
@@ -109,28 +146,41 @@ function isNewArtic(iso) {
 
 }
 
-function hasBeenViewedBefore(id) {
+function hasBeenViewedBefore(id, isnew) {
 
 
     return new Promise(function(resolve, reject) {
 
-         chrome.storage.local.get("viewedArticles", function(items) {
+         chrome.storage.local.get(['viewedArticles'], function(items) {
+
+
+             if(items.viewedArticles) {
 
              var articles = JSON.parse(items.viewedArticles);
 
-             if(!articles) { reject(false) }
+             for(var i = 0; i < articles.length; i++) {
 
-             for (var i = 0; i < articles.length; i++) {
                  if(id == articles[i]) {
 
-                    return true;
-                     console.log("true")
 
-                     resolve(true);
+                     resolve({'success': true, 'isnew': isnew});
+
                  }
+
              }
 
-              resolve(false);
+              resolve({'success': false, 'isnew': isnew});
+
+
+                }
+
+             else {
+
+                resolve({'success': false, 'isnew': isnew});
+             }
+
+
+
 
 
          });
